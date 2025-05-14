@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culture & Society</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Moul&family=Moulpali&family=Kantumruy+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/17870/17870074.png">
+    <style>
+        :root {
+            --primary: #6C4AB6;
+            --secondary: #8D72E1;
+            --accent: #B9E0FF;
+            --light: #F5F5F5;
+            --dark: #1A1A2E;
+            --text: #333333;
+            --text-light: #777777;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Kantumruy Pro', sans-serif;
+            color: var(--text);
+            background-color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Moul', serif;
+            font-weight: normal;
+        }
+
+        .model-text {
+            font-family: 'Moulpali', serif;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 5px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .language-toggle span {
+            padding: 0 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-toggle .active {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: var(--secondary);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch-handle {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--primary);
+        }
+
+        .toggle-switch-handle.active {
+            left: 33px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .header-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-subtitle {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .header-bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .nav-logo {
+            font-family: 'Moul', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            z-index: 1;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-text {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: block;
+            padding: 0.8rem 2rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            animation: fadeInUp 1s ease 0.6s forwards;
+            opacity: 0;
+            width: fit-content;
+            float: left;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Features Section */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .feature-content {
+            padding: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Culture Showcase */
+        .culture-showcase {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .culture-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .culture-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 2rem;
+            flex: 1 1 300px;
+            max-width: 400px;
+            transition: all 0.3s ease;
+        }
+
+        .culture-card:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .culture-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .culture-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Testimonials */
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .testimonial-slide {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 0 1rem;
+            text-align: center;
+        }
+
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--primary);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .testimonial-text:before,
+        .testimonial-text:after {
+            content: '"';
+            font-size: 2rem;
+            color: var(--primary);
+            opacity: 0.3;
+        }
+
+        .testimonial-text:before {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+        }
+
+        .testimonial-text:after {
+            position: absolute;
+            bottom: -25px;
+            right: -15px;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-family: 'Moul', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-about {
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-newsletter input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .footer-newsletter input::placeholder {
+            color: #ccc;
+        }
+
+        .footer-newsletter button {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .footer-newsletter button:hover {
+            background: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.5s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-text {
+                font-size: 1rem;
+            }
+
+            .btn {
+                display: block;
+                margin: 0 auto 1rem;
+                width: 80%;
+            }
+
+            .btn-outline {
+                margin-left: 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Language Specific Styles */
+        .khmer {
+            display: none;
+        }
+
+        body:lang(km) .english {
+            display: none;
+        }
+
+        body:lang(km) .khmer {
+            display: block;
+        }
+    </style>
+</head>
+<body lang="en">
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <span class="english active" onclick="changeLanguage('en')">English</span>
+        <div class="toggle-switch" onclick="toggleLanguage()">
+            <div class="toggle-switch-handle"></div>
+        </div>
+        <span class="khmer" onclick="changeLanguage('km')">ភាសាខ្មែរ</span>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-bg-pattern"></div>
+        <div class="header-content">
+            <img src="https://cdn-icons-png.flaticon.com/512/17870/17870074.png" alt="Culture Logo" class="logo">
+            <h1 class="header-title english">Culture & Society</h1>
+            <h1 class="header-title khmer">វប្បធម៌ និងសង្គម</h1>
+            <p class="header-subtitle english">Exploring the rich tapestry of human culture and societal development</p>
+            <p class="header-subtitle khmer">ស្វែងយល់ពីវប្បធម៌មនុស្សដ៏សម្បូរបែប និងការអភិវឌ្ឍន៍សង្គម</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo english">Culture</a>
+            <a href="#" class="nav-logo khmer">វប្បធម៌</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="english">Home</a><a href="#" class="khmer">ទំព័រដើម</a></li>
+                <li><a href="#" class="english">About</a><a href="#" class="khmer">អំពី</a></li>
+                <li><a href="#" class="english">Culture</a><a href="#" class="khmer">វប្បធម៌</a></li>
+                <li><a href="#" class="english">Events</a><a href="#" class="khmer">ព្រឹត្តិការណ៍</a></li>
+                <li><a href="#" class="english">Contact</a><a href="#" class="khmer">ទំនាក់ទំនង</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Cultural Heritage" class="hero-bg">
+        <div class="hero-content">
+            <h1 class="hero-title english">Discover Our Heritage</h1>
+            <h1 class="hero-title khmer">ស្វែងរកមរតករបស់យើង</h1>
+            <p class="hero-text english">Join us in celebrating the diversity and richness of cultures from around the world. Learn, share, and preserve our shared heritage.</p>
+            <p class="hero-text khmer">ចូលរួមជាមួយយើងដើម្បីប្រារព្ធពិធីវប្បធម៌ដ៏សម្បូរបែបពីជុំវិញពិភពលោក។ រៀន ចែករំលែក និងថែរក្សាមរតករួមរបស់យើង។</p>
+            <a href="#" class="btn english">Explore Now</a>
+            <a href="#" class="btn khmer">ស្វែងរកឥឡូវនេះ</a>
+            <a href="#" class="btn btn-outline english">Learn More</a>
+            <a href="#" class="btn btn-outline khmer">រៀនបន្ថែម</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <h2 class="section-title english">Our Cultural Pillars</h2>
+        <h2 class="section-title khmer">សសរស្តម្ភវប្បធម៌របស់យើង</h2>
+        <div class="features-container">
+            <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Tradition" class="feature-img">
+                <div class="feature-content">
+                    <h3 class="feature-title english">Tradition</h3>
+                    <h3 class="feature-title khmer">ប្រពៃណី</h3>
+                    <p class="english">Explore ancient traditions that have shaped societies for generations.</p>
+                    <p class="khmer">ស្វែងយល់ពីប្រពៃណីបុរាណដែលបានជំរុញសង្គមសម្រាប់ជំនាន់។</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Art" class="feature-img">
+                <div class="feature-content">
+                    <h3 class="feature-title english">Art</h3>
+                    <h3 class="feature-title khmer">សិល្បៈ</h3>
+                    <p class="english">Discover the artistic expressions that define cultural identities.</p>
+                    <p class="khmer">ស្វែងរកការបង្ហាញសិល្បៈដែលកំណត់អត្តសញ្ញាណវប្បធម៌។</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Community" class="feature-img">
+                <div class="feature-content">
+                    <h3 class="feature-title english">Community</h3>
+                    <h3 class="feature-title khmer">សហគមន៍</h3>
+                    <p class="english">Learn how communities preserve and evolve their cultural practices.</p>
+                    <p class="khmer">រៀនពីរបៀបដែលសហគមន៍ថែរក្សា និងអភិវឌ្ឍន៍ការអនុវត្តវប្បធម៌របស់ពួកគេ។</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Culture Showcase -->
+    <section class="section culture-showcase">
+        <h2 class="section-title english">Why Culture Matters</h2>
+        <h2 class="section-title khmer">ហេតុអ្វីវប្បធម៌មានសារៈសំខាន់</h2>
+        <div class="culture-container">
+            <div class="culture-card">
+                <div class="culture-icon">
+                    <i class="fas fa-globe-asia"></i>
+                </div>
+                <h3 class="culture-title english">Global Understanding</h3>
+                <h3 class="culture-title khmer">ការយល់ដឹងពីពិភពលោក</h3>
+                <p class="english">Culture helps us understand and appreciate our differences while recognizing our shared humanity.</p>
+                <p class="khmer">វប្បធម៌ជួយយើងយល់ និងគោរពភាពខុសគ្នារបស់យើង ខណៈដែលស្គាល់ពីមនុស្សភាពរួមរបស់យើង។</p>
+            </div>
+            <div class="culture-card">
+                <div class="culture-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <h3 class="culture-title english">Historical Continuity</h3>
+                <h3 class="culture-title khmer">ភាពបន្តប្រវត្តិសាស្ត្រ</h3>
+                <p class="english">Cultural traditions connect us to our ancestors and provide a bridge to future generations.</p>
+                <p class="khmer">ប្រពៃណីវប្បធម៌ភ្ជាប់យើងទៅនឹងបុព្វបុរសរបស់យើង និងផ្តល់ស្ពានទៅកាន់អនុស្សាវរីយ៍។</p>
+            </div>
+            <div class="culture-card">
+                <div class="culture-icon">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <h3 class="culture-title english">Social Cohesion</h3>
+                <h3 class="culture-title khmer">ភាពសាមគ្គីសង្គម</h3>
+                <p class="english">Shared cultural practices strengthen community bonds and foster mutual respect.</p>
+                <p class="khmer">ការអនុវត្តវប្បធម៌រួមពង្រឹងទំនាក់ទំនងសហគមន៍ និងលើកកម្ពស់ការគោរពគ្នាទៅវិញទៅមក។</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section">
+        <h2 class="section-title english">What People Say</h2>
+        <h2 class="section-title khmer">អ្វីដែលមនុស្សនិយាយ</h2>
+        <div class="testimonials-container">
+            <div class="testimonial-slide">
+                <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Testimonial" class="testimonial-avatar">
+                <p class="testimonial-text english">"This platform has deepened my appreciation for cultural diversity and helped me connect with my own heritage."</p>
+                <p class="testimonial-text khmer">"វេទិកានេះបានពង្រឹងការគោរពរបស់ខ្ញុំចំពោះភាពខុសប្លែកគ្នានៃវប្បធម៌ និងជួយខ្ញុំភ្ជាប់ទំនាក់ទំនងជាមួយមរតករបស់ខ្ញុំផ្ទាល់។"</p>
+                <p class="testimonial-author">Sophal Chen</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo english">Culture</div>
+                <div class="footer-logo khmer">វប្បធម៌</div>
+                <p class="footer-about english">Dedicated to preserving and celebrating the world's cultural heritage.</p>
+                <p class="footer-about khmer">បំណុលចិត្តចំពោះការថែរក្សា និងប្រារព្ធពិធីមរតកវប្បធម៌ពិភពលោក។</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3 class="english">Quick Links</h3>
+                <h3 class="khmer">តំណភ្ជាប់រហ័ស</h3>
+                <ul>
+                    <li><a href="#" class="english">Home</a><a href="#" class="khmer">ទំព័រដើម</a></li>
+                    <li><a href="#" class="english">About Us</a><a href="#" class="khmer">អំពីយើង</a></li>
+                    <li><a href="#" class="english">Cultural Events</a><a href="#" class="khmer">ព្រឹត្តិការណ៍វប្បធម៌</a></li>
+                    <li><a href="#" class="english">Gallery</a><a href="#" class="khmer">វិចិត្រសាល</a></li>
+                    <li><a href="#" class="english">Blog</a><a href="#" class="khmer">ប្លុក</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3 class="english">Resources</h3>
+                <h3 class="khmer">ធនធាន</h3>
+                <ul>
+                    <li><a href="#" class="english">Cultural Research</a><a href="#" class="khmer">ការស្រាវជ្រាវវប្បធម៌</a></li>
+                    <li><a href="#" class="english">Educational Materials</a><a href="#" class="khmer">សម្ភារៈអប់រំ</a></li>
+                    <li><a href="#" class="english">Preservation Guides</a><a href="#" class="khmer">ការណែនាំអំពីការអភិរក្ស</a></li>
+                    <li><a href="#" class="english">Volunteer</a><a href="#" class="khmer">ស្ម័គ្រចិត្ត</a></li>
+                    <li><a href="#" class="english">Donate</a><a href="#" class="khmer">ឧបត្ថម្ភ</a></li>
+                </ul>
+            </div>
+            <div class="footer-newsletter">
+                <h3 class="english">Newsletter</h3>
+                <h3 class="khmer">ព្រឹត្តិបត្រព័ត៌មាន</h3>
+                <p class="english">Subscribe to get updates on cultural events and news.</p>
+                <p class="khmer">ជាវដើម្បីទទួលបានព័ត៌មានអំពីព្រឹត្តិការណ៍ និងព័ត៌មានវប្បធម៌។</p>
+                <input type="email" placeholder="Your Email" class="english">
+                <input type="email" placeholder="អ៊ីមែលរបស់អ្នក" class="khmer">
+                <button class="english">Subscribe</button>
+                <button class="khmer">ជាវ</button>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="english">2025 - All rights reserved. Provide by Mr. Phekdey PHORN</p>
+            <p class="khmer">2025 - រក្សារ​សិទ្ធិ​គ្រប់​យ៉ាង ដោយលោក ផន ភក្ដី។</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Language Toggle
+        function toggleLanguage() {
+            const toggleSwitch = document.querySelector('.toggle-switch');
+            const toggleHandle = document.querySelector('.toggle-switch-handle');
+            const englishTexts = document.querySelectorAll('.english');
+            const khmerTexts = document.querySelectorAll('.khmer');
+            
+            toggleSwitch.classList.toggle('active');
+            toggleHandle.classList.toggle('active');
+            
+            const isEnglish = !toggleSwitch.classList.contains('active');
+            document.body.lang = isEnglish ? 'en' : 'km';
+            
+            // Update active state for language text
+            document.querySelector('.language-toggle .english').classList.toggle('active', isEnglish);
+            document.querySelector('.language-toggle .khmer').classList.toggle('active', !isEnglish);
+        }
+
+        function changeLanguage(lang) {
+            if ((lang === 'en' && document.body.lang === 'en') || 
+                (lang === 'km' && document.body.lang === 'km')) {
+                return;
+            }
+            toggleLanguage();
+        }
+
+        // Animation on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.feature-card, .culture-card, .testimonial-slide');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Set initial state for animation
+        document.querySelectorAll('.feature-card, .culture-card, .testimonial-slide').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>
